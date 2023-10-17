@@ -49,13 +49,14 @@ public class RuleApiImpl implements RuleApi {
         File fileTest = new File();
 
         try {
-            test.setName(file.getName());
-            test.setContentType(file.getContentType());
-            test.setContentType(file.getContentType());
             fileTest.setName(file.getOriginalFilename());
             fileTest.setFileData(FileUtils.compressFile(file.getBytes()));
             fileTest.setType(file.getContentType());
             fileDao.save(fileTest);
+            test.setName(file.getOriginalFilename());
+            test.setContentType(file.getContentType());
+            test.setContent(file.getBytes());
+            test.setId(fileTest.getId());
             return new ResponseEntity<RuleEngineContentDto>(test,HttpStatus.OK);
         } catch (Exception e) {
             logger.error("An error occurred during file upload:{}", e.getMessage());

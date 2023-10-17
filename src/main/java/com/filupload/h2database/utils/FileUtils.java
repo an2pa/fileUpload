@@ -1,45 +1,50 @@
 package com.filupload.h2database.utils;
 
+import com.sun.tools.javac.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 public class FileUtils {
+    public static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static byte[] compressFile(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
         deflater.setInput(data);
         deflater.finish();
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        while (!deflater.finished()) {
-            int size = deflater.deflate(tmp);
-            outputStream.write(tmp, 0, size);
-        }
-        try {
-            outputStream.close();
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length)) {
+            byte[] tmp = new byte[4 * 1024];
+            while (!deflater.finished()) {
+                int size = deflater.deflate(tmp);
+                outputStream.write(tmp, 0, size);
+            }
+            return outputStream.toByteArray();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error:{}"+e.getMessage());
         }
-        return outputStream.toByteArray();
+        return null;
     }
+
 
 
 
     public static byte[] decompressFile(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] tmp = new byte[4*1024];
-        try {
+
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length)) {
+            byte[] tmp = new byte[4 * 1024];
             while (!inflater.finished()) {
                 int count = inflater.inflate(tmp);
                 outputStream.write(tmp, 0, count);
             }
-            outputStream.close();
+            return outputStream.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return outputStream.toByteArray();
+        return null; // Return an appropriate value if an exception is caught
     }
 }
