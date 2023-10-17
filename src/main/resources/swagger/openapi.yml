@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: File Upload and Download API
+  version: 1.0.0
+
+paths:
+  /rule/file/upload:
+    post:
+      summary: Upload a file
+      operationId: ruleEngineFileUpload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                metadata:
+                  $ref: '#/components/schemas/RuleEngineContentDto'
+      responses:
+        '201':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleEngineContentDto'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /rule/file/download/{fileId}:
+    get:
+      summary: Download a file by ID
+      operationId: ruleEngineFileDownload
+      parameters:
+        - in: path
+          name: fileId
+          required: true
+          schema:
+            type: integer
+          description: ID of the file to download
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: File not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    RuleEngineContentDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        contentType:
+          type: string
+        content:
+          type: string
+          format: byte

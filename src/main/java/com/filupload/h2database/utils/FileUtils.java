@@ -1,4 +1,4 @@
-package com.filupload.h2database.util;
+package com.filupload.h2database.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
@@ -18,7 +18,8 @@ public class FileUtils {
         }
         try {
             outputStream.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return outputStream.toByteArray();
     }
@@ -36,7 +37,8 @@ public class FileUtils {
                 outputStream.write(tmp, 0, count);
             }
             outputStream.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return outputStream.toByteArray();
     }

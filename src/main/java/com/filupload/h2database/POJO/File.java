@@ -1,19 +1,17 @@
 package com.filupload.h2database.POJO;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Entity
-@Table(name="FileData")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class  File {
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +20,5 @@ public class  File {
     private String type;
 
     @Lob
-    @Column(name = "filedata", length = 1000)
     private byte[] fileData;
 }
