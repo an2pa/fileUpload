@@ -22,16 +22,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @RestController
 @RequestMapping(value = "/api")
-
 public class RuleApiImpl implements RuleApi {
 
 
@@ -39,8 +40,7 @@ public class RuleApiImpl implements RuleApi {
     @Autowired
     FileDao fileDao;
 
-
-    public static final Logger logger = LoggerFactory.getLogger(Main.class);
+    public static final Logger logger = LoggerFactory.getLogger(RuleApiImpl.class);
 
 
     @Override
@@ -87,7 +87,6 @@ public class RuleApiImpl implements RuleApi {
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(resource);
         } else {
-            // Handle the case where the file is not found
             return ResponseEntity.notFound().build();
         }
     }
