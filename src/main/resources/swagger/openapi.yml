@@ -40,7 +40,7 @@ paths:
           name: fileId
           required: true
           schema:
-            type: integer
+            type: long
           description: ID of the file to download
       responses:
         '200':
@@ -61,7 +61,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: long
         name:
           type: string
         contentType:
