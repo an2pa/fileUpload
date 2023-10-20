@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.filupload.h2database.POJO")
 public class H2databaseApplication {
 
 	public static void main(String[] args) {

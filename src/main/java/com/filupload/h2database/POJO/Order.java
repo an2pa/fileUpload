@@ -15,9 +15,11 @@ import lombok.NoArgsConstructor;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String productNo;
     private String customerName;
     private String customerLocation;
     private String customerContactNumber;
 }
+
+//http://localhost:8080/api/getOrders?productNo=1&page=0&size=5
